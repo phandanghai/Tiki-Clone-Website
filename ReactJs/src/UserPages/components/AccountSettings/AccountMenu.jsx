@@ -6,7 +6,7 @@ import AccountNotification from "../../../../public/AccountImage/AccountNotifica
 import AccountOrder from "../../../../public/AccountImage/AccountOrder.svg";
 import AccountPayment from "../../../../public/AccountImage/AccountPayment.svg";
 import AccountUser from "../../../../public/AccountImage/AccountUser.svg";
-import AccountWatched from "../../../../public/AccountImage/AccountWatched.svg";
+import AccountWatched from "../../../../public/AccountImage/Accountwatched.svg";
 import AccountExchange from "../../../../public/AccountImage/AccountExchange.svg";
 import AccountReview from "../../../../public/AccountImage/AccountReview.svg";
 import AccountLove from "../../../../public/AccountImage/AccountLove.svg";
