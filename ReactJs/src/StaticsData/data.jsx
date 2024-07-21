@@ -20,7 +20,7 @@ export const menu = [
       {
         id: 2,
         title: "Trang cá nhân",
-        url: "/admin/users/1",
+        url: "/admin/user-search",
         icon: User,
       },
     ],
