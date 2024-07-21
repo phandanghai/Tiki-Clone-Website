@@ -8,12 +8,23 @@ const middlewaresUser = {
       const accessToken = token.split(" ")[1];
       const res = jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY);
       req.email = res.user[0].email;
+      req.admin = res.user[0].admin;
       next();
     } else {
       return res
         .status(401)
         .json({ message: "Access denied. No token provided." });
     }
+  },
+
+  authorizationUser: (req, res, next) => {
+    middlewaresUser.authenticationUser(req, res, () => {
+      if (req.admin) {
+        next();
+      } else {
+        return res.status(403).json({ message: "You are not admin" });
+      }
+    });
   },
 };
 

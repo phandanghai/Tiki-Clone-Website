@@ -46,9 +46,10 @@ const UserModels = {
     phone,
     sex,
     verified,
+    admin,
   }) => {
     const result = await database.query(
-      `insert into Customers (id_user,full_name, username, birthday, email, avatar, passwordCode,phone, sex, verified) values (?,?,?,?,?,?,?,?,?,?)`,
+      `insert into Customers (id_user,full_name, username, birthday, email, avatar, passwordCode,phone, sex, verified,admin) values (?,?,?,?,?,?,?,?,?,?,?)`,
       [
         id_user,
         full_name,
@@ -60,6 +61,7 @@ const UserModels = {
         phone,
         sex,
         verified,
+        admin,
       ]
     );
     return result;
@@ -171,7 +173,7 @@ const UserModels = {
   },
   getListAddressModels: async ({ id_user }) => {
     const result = await database.query(
-      `SELECT address_1,phone_1,wards_1,district_1,province_1,default_address_1,customer_1,address_2,phone_2,wards_2,district_2,province_2,default_address_2,customer_2,address_3,phone_3,wards_3,district_3,province_3,default_address_3,customer_3 FROM Customers WHERE id_user = '${id_user}'`
+      `SELECT address_1,phone_1,wards_1,district_1,province_1,customer_1,type_address_1,address_2,phone_2,wards_2,district_2,province_2,customer_2,type_address_2,address_3,phone_3,wards_3,district_3,province_3,customer_3,type_address_3,company_1,company_2,company_3 FROM Customers WHERE id_user = '${id_user}'`
     );
     return result[0];
   },
@@ -206,24 +208,6 @@ const UserModels = {
     return result;
   },
 
-  setDefaultAddressModels: async ({ id_user, id }) => {
-    for (let i = 1; i < 4; i++) {
-      if (i === id) {
-        await database.query(
-          `update Customers set default_address_${i} = true where id_user =?`,
-          [id_user]
-        );
-      } else {
-        await database.query(
-          `update Customers set default_address_${i} = false where id_user =?`,
-          [id_user]
-        );
-      }
-    }
-    return {
-      message: "Set default address successfully",
-    };
-  },
   updatePhoneModels: async ({ id_user, phone }) => {
     const result = await database.query(
       `UPDATE Customers SET phone =? WHERE id_user =?`,
@@ -258,6 +242,85 @@ const UserModels = {
       `SELECT * FROM Customers WHERE full_name LIKE '%${search}%' OR username LIKE '%${search}%' OR email LIKE '%${search}%' OR phone LIKE '%${search}%' OR id_user LIKE '%${search}%'`
     );
     return result[0];
+  },
+  updateListAddressModels: async ({
+    id_user,
+    customer_1,
+    customer_2,
+    customer_3,
+    type_address_1,
+    type_address_2,
+    type_address_3,
+    address_1,
+    address_2,
+    address_3,
+    phone_1,
+    phone_2,
+    phone_3,
+    district_1,
+    district_2,
+    district_3,
+    wards_1,
+    wards_2,
+    wards_3,
+    province_1,
+    province_2,
+    province_3,
+    company_1,
+    company_2,
+    company_3,
+  }) => {
+    const result = await database.query(
+      `UPDATE Customers SET customer_1 =?, customer_2 =?, customer_3 =?, type_address_1 =?, type_address_2 =?, type_address_3 =?, address_1 =?, address_2 =?, address_3 =?, phone_1 =?, phone_2 =?, phone_3 =?, district_1 =?, district_2 =?, district_3 =?, wards_1 =?, wards_2 =?, wards_3 =?, province_1 =?, province_2 =?, province_3 =? ,company_1 =? ,company_2 =?, company_3 =? WHERE id_user = ?`,
+      [
+        customer_1,
+        customer_2,
+        customer_3,
+        type_address_1,
+        type_address_2,
+        type_address_3,
+        address_1,
+        address_2,
+        address_3,
+        phone_1,
+        phone_2,
+        phone_3,
+        district_1,
+        district_2,
+        district_3,
+        wards_1,
+        wards_2,
+        wards_3,
+        province_1,
+        province_2,
+        province_3,
+        company_1,
+        company_2,
+        company_3,
+        id_user,
+      ]
+    );
+    return result;
+  },
+
+  updateDefaultAddressModels: async ({
+    id_user,
+    default_address_index,
+    default_address,
+    type_address_default,
+    phone_default,
+  }) => {
+    const result = await database.query(
+      `UPDATE Customers SET default_address_index = ?,default_address = ?,type_address_default =?,phone_default = ? WHERE id_user = ?`,
+      [
+        default_address_index,
+        default_address,
+        type_address_default,
+        phone_default,
+        id_user,
+      ]
+    );
+    return result;
   },
 };
 

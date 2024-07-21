@@ -8,6 +8,7 @@ const initialState = {
   widthScreen: window.innerWidth,
   AccountPopup: false,
   slug: null,
+  updateAddress: { state: false, address: null },
 };
 
 const stateSlider = createSlice({
@@ -35,6 +36,9 @@ const stateSlider = createSlice({
     setAvatarPopup: (state, action) => {
       state.avatarPopup = action.payload;
     },
+    setUpdateAddress: (state, action) => {
+      state.updateAddress = action.payload;
+    },
   },
 });
 
@@ -42,6 +46,7 @@ export const {
   setLoginPopup,
   setWWidthScreen,
   setAccountPopup,
+  setUpdateAddress,
   setSlug,
   setFilterPopup,
   setDeletePopup,

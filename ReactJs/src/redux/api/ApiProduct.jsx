@@ -5,6 +5,7 @@ import {
   getProductsStart,
   getProductsSuccess,
 } from "../sliders/ProductSlider";
+import { axiosJWT } from "../axios/axios";
 
 export const ApiCreateProduct = async (product) => {
   try {
@@ -105,9 +106,12 @@ export const ApiGetDataFilter = async (dispatch, filter) => {
 
 export const ApiUpdateProduct = async (product) => {
   try {
-    const result = await axios.post(
+    const result = await axiosJWT.post(
       `${URL_CALL_API}/api/products/updateProduct`,
-      product
+      product,
+      {
+        withCredentials: true,
+      }
     );
     return result;
   } catch (error) {

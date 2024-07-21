@@ -6,6 +6,7 @@ import {
   setAccountPopup,
   setLoginPopup,
 } from "../../../redux/sliders/stateSlider";
+import NoAvatarHeading from "../../../../public/noAvatarHeading.png";
 import { ApiGetOrderByUser } from "../../../redux/api/ApiOrder";
 import { ApiSearchProduct } from "../../../redux/api/ApiProduct";
 import { getProductsSuccess } from "../../../redux/sliders/ProductSlider";
@@ -17,6 +18,7 @@ function Heading() {
   const [search, setSearch] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
   const orders = useSelector((state) => state.orders.orders);
+  const user = useSelector((state) => state.user.user);
   const UserItems = [
     {
       title: "Trang chủ",
@@ -24,7 +26,7 @@ function Heading() {
     },
     {
       title: "Tài khoản",
-      img: "https://salt.tikicdn.com/ts/upload/07/d5/94/d7b6a3bd7d57d37ef6e437aa0de4821b.png",
+      img: "https://res.cloudinary.com/drvdebpw2/image/upload/v1721644634/wu9nbshiirq81rowhpdb.png",
     },
     {
       title: null,
@@ -141,18 +143,31 @@ function Heading() {
             {width > 769 ? (
               <div className="w-full  flex items-center justify-center gap-2">
                 {UserItems.map((item, index) => {
+                  console.log(item?.img);
                   return (
                     <div
                       key={index}
                       className="item flex py-2 px-2 gap-[6px] items-center justify-center rounded-md hover:cursor-pointer hover:bg-[#27272a1f] relative"
                       onClick={() => handleClick(index)}
                     >
-                      <img
-                        src={item.img}
-                        alt=""
-                        className="w-6 h-6"
-                        style={item.title ? {} : { marginLeft: 10 }}
-                      />
+                      {item?.title === "Tài khoản" ? (
+                        <img
+                          src={
+                            user?.avatar ||
+                            "https://res.cloudinary.com/drvdebpw2/image/upload/v1721644634/wu9nbshiirq81rowhpdb.png"
+                          }
+                          alt=""
+                          className="w-6 h-6 rounded-full"
+                          style={item.title ? {} : { marginLeft: 10 }}
+                        />
+                      ) : (
+                        <img
+                          src={item?.img}
+                          alt=""
+                          className="w-6 h-6 rounded-full"
+                          style={item.title ? {} : { marginLeft: 10 }}
+                        />
+                      )}
                       <span className="text-text-span text-14 w-max">
                         {item.title}
                       </span>
@@ -178,12 +193,21 @@ function Heading() {
                       className="item flex py-2 px-2 gap-[6px] items-center justify-center rounded-md hover:cursor-pointer hover:bg-[#27272a1f] relative"
                       onClick={() => handleClick(index)}
                     >
-                      <img
-                        src={item.img}
-                        alt=""
-                        className="w-6 h-6"
-                        style={item.title ? {} : { marginLeft: 10 }}
-                      />
+                      {item?.title === "Tài khoản" ? (
+                        <img
+                          src={user?.avatar}
+                          alt=""
+                          className="w-6 h-6"
+                          style={item.title ? {} : { marginLeft: 10 }}
+                        />
+                      ) : (
+                        <img
+                          src={item?.img}
+                          alt=""
+                          className="w-6 h-6"
+                          style={item.title ? {} : { marginLeft: 10 }}
+                        />
+                      )}
                       <span className="text-text-span text-14 w-max">
                         {item.title}
                       </span>

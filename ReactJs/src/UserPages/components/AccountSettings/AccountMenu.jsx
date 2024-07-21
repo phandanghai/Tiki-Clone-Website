@@ -71,22 +71,24 @@ const AccountMenu = () => {
   ];
   return (
     <div className="w-[250px] h-max mt-[2px]">
-      <div className="account pl-[7px] w-full h-[45px] flex gap-x-3 justify-center">
-        <img
-          src={user?.avatar}
-          alt=""
-          className="w-[45px] h-[45px] rounded-full"
-        />
-        <div
-          className="flex flex-col w-full h-[38px] text-13 font-light mt-1 text-[#333333]"
-          style={{ lineHeight: "15px" }}
-        >
-          Tài khoản của
-          <strong className="text-16 text-text-title font-normal mt-[6px]">
-            {user?.full_name}
-          </strong>
+      {Object.keys(user).length === 0 ? null : (
+        <div className="account pl-[7px] w-full h-[45px] flex gap-x-3 justify-center">
+          <img
+            src={user?.avatar}
+            alt=""
+            className="w-[45px] h-[45px] rounded-full"
+          />
+          <div
+            className="flex flex-col w-full h-[38px] text-13 font-light mt-1 text-[#333333]"
+            style={{ lineHeight: "15px" }}
+          >
+            Tài khoản của
+            <strong className="text-16 text-text-title font-normal mt-[6px]">
+              {user?.full_name}
+            </strong>
+          </div>
         </div>
-      </div>
+      )}
       <div className="menu mt-3 flex flex-col">
         {ListMenu.map((item, index) => {
           return (

@@ -153,6 +153,7 @@ export const ApiGetListAddress = async ({ id_user }) => {
 
 export const ApiCreateNewAddress = async (dispatch, { address }) => {
   try {
+    console.log({ address });
     dispatch(getUserStart());
     const result = await axiosJWT.post(
       `${URL_CALL_API}/api/users/createNewAddress`,
@@ -200,6 +201,7 @@ export const ApiUpdatePassword = async (dispatch, data) => {
         withCredentials: true,
       }
     );
+    console.log(result.data.user);
     dispatch(getUserSuccess(result.data.user));
     return result;
   } catch (error) {
@@ -307,6 +309,55 @@ export const ApiAdminSearchUser = async ({ search }) => {
     );
     return result.data;
   } catch (error) {
+    console.log(error);
+  }
+};
+
+export const ApiUpdateListAddress = async (dispatch, { addresses }) => {
+  try {
+    console.log(addresses);
+    dispatch(getUserStart());
+    const result = await axiosJWT.post(
+      `${URL_CALL_API}/api/users/updateListAddress`,
+      { addresses },
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch(getUserSuccess(result.data.user));
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const ApiSetAddressDefault = async (
+  dispatch,
+  {
+    id_user,
+    default_address_index,
+    default_address,
+    type_address_default,
+    phone_default,
+  }
+) => {
+  try {
+    dispatch(getUserStart());
+    const result = await axiosJWT.post(
+      `${URL_CALL_API}/api/users/setAddressDefault`,
+      {
+        id_user,
+        default_address,
+        default_address_index,
+        type_address_default,
+        phone_default,
+      },
+      { withCredentials: true }
+    );
+    dispatch(getUserSuccess(result.data.user));
+    return result;
+  } catch (error) {
+    dispatch(getUserFail());
     console.log(error);
   }
 };

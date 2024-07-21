@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderDetal from "./AdminPages/components/OrderDetal/OrderDetal";
 import Heading from "./UserPages/components/Heading/Heading";
 import Narbar from "./AdminPages/components/Narbar/Narbar";
+import NarbarUser from "./UserPages/components/Narbar/Narbar";
 import Login from "./UserPages/popup/Login/Login";
 import FilterPopup from "./UserPages/popup/FilterPopup/FilterPopup";
 import DeletePopup from "./UserPages/popup/DeletePopup/DeletePopup";
@@ -17,6 +18,7 @@ import ConfirmDeleteUser from "./AdminPages/popup/ConfirmDeleteUser";
 import ConfirmDeleteOrder from "./AdminPages/popup/ConfirmDeleteOrder";
 import AccountPopup from "./UserPages/popup/AccountPopup/AccountPopup";
 import AvatarPopup from "./UserPages/popup/AvatarPopup/AvatarPopup";
+import AdminLogin from "./AdminPages/components/AdminLogin/AdminLogin";
 const App = () => {
   const dispatch = useDispatch();
   const deleteProduct = useSelector((state) => state.stateAdmin.deleteProduct);
@@ -52,11 +54,14 @@ const App = () => {
               path={route.path}
               element={
                 <>
-                  <Navbar />
-                  <Menu />
-                  <div className="page text-white">
-                    <Pages />
-                  </div>
+                  {!route.login && <Navbar />}
+                  {!route.login && <Menu />}
+                  {!route.login && (
+                    <div className="page text-white">
+                      <Pages />
+                    </div>
+                  )}
+                  {route.login && <AdminLogin />}
 
                   {deleteProduct?.state && (
                     <div className="confirmDeleteProduct">
@@ -98,7 +103,7 @@ const App = () => {
               element={
                 <div className="w-full h-max bg-[#f5f5fa] overflow-x-hidden">
                   {widthScreen > 950 ? <Heading /> : null}
-                  {/* {widthScreen > 950 ? <Navbar /> : null} */}
+                  {widthScreen > 950 ? <NarbarUser /> : null}
                   <div className="pages w-full h-max pb-16 overflow-x-hidden">
                     <Pages />
                   </div>

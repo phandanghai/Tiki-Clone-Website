@@ -682,30 +682,33 @@ export const CategoryBooks = [
   {
     id: 1,
     title: "Sách Tiếng Việt",
+    param: "/sach-tieng-viet",
+    thumnail:
+      "https://res.cloudinary.com/drvdebpw2/image/upload/v1721718479/n20o3houm9q9v0fzo5yg.png",
     items: [
       {
         id: 1.1,
-        title: "Thiếu Nhi",
+        title: "Sách Thiếu Nhi",
         params: "/sach-thieu-nhi",
       },
       {
         id: 1.2,
-        title: "Giáo khoa-Tham khảo",
+        title: "Sách Giáo khoa-Tham khảo",
         params: "/sach-giao-kho-tham-khao",
       },
       {
         id: 1.3,
-        title: "Văn học",
+        title: "Sách Văn học",
         params: "/sach-van-hoc",
       },
       {
         id: 1.4,
-        title: "Tâm lý-Kỹ năng sống",
+        title: "Sách Tâm lý-Kỹ năng sống",
         params: "/sach-tam-ly-ky-nang-song",
       },
       {
         id: 1.5,
-        title: "Kinh Tế",
+        title: "Sách Kinh Tế",
         params: "/sach-kinh-te",
       },
     ],
@@ -713,10 +716,13 @@ export const CategoryBooks = [
   {
     id: 2,
     title: "Văn phòng phẩm",
+    param: "/van-phong-pham",
+    thumnail:
+      "https://res.cloudinary.com/drvdebpw2/image/upload/v1721718479/cnhga3oar9sqzzlmswep.png",
     items: [
       {
         id: 2.1,
-        title: "Bút-Viết",
+        title: "Bút-Viết các loại",
         params: "/but-viet",
       },
       {
@@ -743,6 +749,9 @@ export const CategoryBooks = [
   {
     id: 3,
     title: "Đồ chơi",
+    param: "/do-choi",
+    thumnail:
+      "https://res.cloudinary.com/drvdebpw2/image/upload/v1721718478/ntzvxpocqzbgyskz206p.webp",
     items: [
       {
         id: 3.1,
@@ -769,10 +778,13 @@ export const CategoryBooks = [
   {
     id: 4,
     title: "Lưu niệm",
+    param: "/luu-niem",
+    thumnail:
+      "https://res.cloudinary.com/drvdebpw2/image/upload/v1721718479/yrzxmofm80cjiq1df9sq.png",
     items: [
       {
         id: 4.1,
-        title: "Hộp quà -Túi quà - Thùng giấy",
+        title: "Hộp quà - Thùng giấy",
         params: "/hop-qua-tui-qua-thung-giay",
       },
       {
@@ -790,6 +802,9 @@ export const CategoryBooks = [
   {
     id: 5,
     title: "Foreign books",
+    param: "/foreign-books",
+    thumnail:
+      "https://res.cloudinary.com/drvdebpw2/image/upload/v1721718479/mdtdb8zyobfkwqhgsnws.png",
     items: [
       {
         id: 5.1,

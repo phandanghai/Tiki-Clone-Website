@@ -24,9 +24,9 @@ router.post(
 );
 router.post("/createNewAddress", UserController.createNewAddress);
 router.post(
-  "/setDefaultAddress",
+  "/setAddressDefault",
   middlewaresUser.authenticationUser,
-  UserController.setDefaultAddress
+  UserController.updateDefaultAddress
 );
 router.post(
   "/updatePhone",
@@ -49,6 +49,11 @@ router.post(
   "/checkAccessUser",
   middlewaresUser.authenticationUser,
   UserController.checkAccessUser
+);
+router.post(
+  "/updateListAddress",
+  middlewaresUser.authenticationUser,
+  UserController.updateListAddress
 );
 router.post(
   "/uploadAvatar",

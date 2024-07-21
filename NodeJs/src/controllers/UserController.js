@@ -7,6 +7,9 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const env = require("dotenv");
 
+const options = {
+  maxAge: 365 * 24 * 60 * 60 * 1000, // thời gian sống 365 ngày (đơn vị là milliseconds)
+};
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
@@ -110,6 +113,7 @@ const UserController = {
           phone,
           sex,
           verified,
+          admin: false,
         });
         if (result) {
           return res
@@ -163,6 +167,7 @@ const UserController = {
         const isUser = await bcrypt.compare(password, user[0].passwordCode);
         if (isUser) {
           const accessToken = generateAccessToken(user);
+          res.cookie("accessToken", accessToken, options);
           const refreshToken = generateRefreshToken(user);
           return res.status(200).json({
             message: "Login successful",
@@ -349,7 +354,6 @@ const UserController = {
         ward,
         address,
         type_address,
-        default_address,
       } = req.body.address;
       const getIdAddress = await UserModels.getListAddressModels({
         id_user: id_user,
@@ -367,12 +371,6 @@ const UserController = {
           type_address,
           id: 1,
         });
-        if (default_address) {
-          const result2 = await UserModels.setDefaultAddressModels({
-            id_user,
-            id: 1,
-          });
-        }
         const user = await UserModels.getUserModels({ id_user });
         if (user) {
           return res.status(200).json({
@@ -396,12 +394,6 @@ const UserController = {
           type_address,
           id: 2,
         });
-        if (default_address) {
-          const result2 = await UserModels.setDefaultAddressModels({
-            id_user,
-            id: 2,
-          });
-        }
         const user = await UserModels.getUserModels({ id_user });
         if (user) {
           return res.status(200).json({
@@ -422,12 +414,6 @@ const UserController = {
           type_address,
           id: 3,
         });
-        if (default_address) {
-          const result2 = await UserModels.setDefaultAddressModels({
-            id_user,
-            id: 3,
-          });
-        }
         const user = await UserModels.getUserModels({ id_user });
         if (user) {
           return res.status(200).json({
@@ -440,26 +426,7 @@ const UserController = {
       console.log(error);
     }
   },
-  setDefaultAddress: async (req, res) => {
-    try {
-      const { id_user, id } = req.body;
-      const result = UserModels.setDefaultAddressModels({
-        id_user: id_user,
-        id: id,
-      });
-      if (result) {
-        const user = await UserModels.getUserModels({ id_user });
-        if (user) {
-          return res.status(200).json({
-            message: "Create NewAddress successfully",
-            user: user,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
+
   updatePhone: async (req, res) => {
     try {
       const { id_user, phone } = req.body;
@@ -551,12 +518,15 @@ const UserController = {
         if (user) {
           const new_access_token = generateAccessToken(user);
           const new_refresh_token = generateRefreshToken(user);
-          return res.cookie("accessToken", new_access_token).status(200).json({
-            message: "Refresh token successfully",
-            user: user,
-            refreshToken: new_refresh_token,
-            accessToken: new_access_token,
-          });
+          return res
+            .cookie("accessToken", new_access_token, options)
+            .status(200)
+            .json({
+              message: "Refresh token successfully",
+              user: user,
+              refreshToken: new_refresh_token,
+              accessToken: new_access_token,
+            });
         }
       }
     } catch (error) {
@@ -595,6 +565,53 @@ const UserController = {
         return res.status(200).json({
           message: "Search user successfully",
           listUser: result,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  updateListAddress: async (req, res) => {
+    try {
+      console.log(req.body);
+      const result = await UserModels.updateListAddressModels(
+        req.body.addresses
+      );
+      if (result) {
+        const user = await UserModels.getUserModels({
+          id_user: req.body.addresses.id_user,
+        });
+        return res.status(200).json({
+          message: "Update list address successfully",
+          user: user,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  updateDefaultAddress: async (req, res) => {
+    try {
+      const {
+        id_user,
+        default_address_index,
+        default_address,
+        type_address_default,
+        phone_default,
+      } = req.body;
+      const result = await UserModels.updateDefaultAddressModels({
+        id_user,
+        default_address_index,
+        default_address,
+        type_address_default,
+        phone_default,
+      });
+      if (result) {
+        const user = await UserModels.getUserModels({ id_user: id_user });
+        return res.status(200).json({
+          message: "Update default address successfully",
+          user: user,
         });
       }
     } catch (error) {

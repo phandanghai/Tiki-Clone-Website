@@ -110,6 +110,8 @@ const ProductsModels = {
     minPrice,
     brand_product,
     stores_product,
+    category_product,
+    type_product,
   }) => {
     console.log(
       service_product,
@@ -117,10 +119,12 @@ const ProductsModels = {
       maxPrice,
       minPrice,
       brand_product,
-      stores_product
+      stores_product,
+      category_product,
+      type_product
     );
     let queryStores;
-    if (stores_product.length > 0) {
+    if (stores_product?.length > 0) {
       queryStores = `AND stores_product IN (${stores_product
         .map((store) => `"${store}"`)
         .join(", ")})`;
@@ -128,7 +132,7 @@ const ProductsModels = {
       queryStores = ``;
     }
     let queryBrand;
-    if (brand_product.length > 0) {
+    if (brand_product?.length > 0) {
       queryBrand = `AND brand_product IN (${brand_product
         .map((brand) => `"${brand}"`)
         .join(", ")})`;
@@ -147,11 +151,21 @@ const ProductsModels = {
     } else {
       queryMaxPrice = ``;
     }
-    console.log(
-      `SELECT * FROM Products WHERE service_product = true  ${queryStores}  ${queryBrand}  ${queryMinPrice}  ${queryMaxPrice}`
-    );
+    let queryTypeProduct;
+    if (type_product) {
+      queryTypeProduct = `AND type_product = "${type_product}"`;
+    } else {
+      queryTypeProduct = ``;
+    }
+    let queryCategoryProduct;
+    if (category_product) {
+      queryCategoryProduct = `AND category_product = "${category_product}"`;
+    } else {
+      queryCategoryProduct = ``;
+    }
+    // return `SELECT * FROM Products WHERE service_product = true  ${queryStores}  ${queryBrand}  ${queryMinPrice}  ${queryMaxPrice} ${queryTypeProduct} ${queryCategoryProduct}`;
     const result = await database.query(
-      `SELECT * FROM Products WHERE service_product = true  ${queryStores}  ${queryBrand}  ${queryMinPrice}  ${queryMaxPrice}`
+      `SELECT * FROM Products WHERE service_product = true  ${queryStores}  ${queryBrand}  ${queryMinPrice}  ${queryMaxPrice} ${queryTypeProduct} ${queryCategoryProduct}`
     );
     return result;
   },

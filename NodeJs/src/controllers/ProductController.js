@@ -181,7 +181,7 @@ const ProductController = {
   },
   getDataFilter: async (req, res) => {
     try {
-      console.log(req.body);
+      console.log(req.body.filter);
       const result = await ProductsModels.getDataFilterModels(req.body.filter);
       if (result) {
         return res.status(200).json({

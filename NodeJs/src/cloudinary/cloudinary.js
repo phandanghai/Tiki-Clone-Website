@@ -1,10 +1,10 @@
 // cloudinaryConfig.js
-const cloudinary = require('cloudinary').v2;
-require('dotenv').config();
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
 cloudinary.config({
-   cloud_name: 'drvdebpw2',
-   api_key: '454137898791297',
-   api_secret: 'tEs7h8Ac_WQ2t77LjH8Anxb5StM',
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
 
 module.exports = cloudinary;
