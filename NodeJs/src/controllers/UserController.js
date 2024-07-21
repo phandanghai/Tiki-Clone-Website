@@ -110,6 +110,7 @@ const UserController = {
           phone,
           sex,
           verified,
+          admin: false,
         });
         if (result) {
           return res
@@ -163,6 +164,7 @@ const UserController = {
         const isUser = await bcrypt.compare(password, user[0].passwordCode);
         if (isUser) {
           const accessToken = generateAccessToken(user);
+          res.cookie("accessToken", accessToken);
           const refreshToken = generateRefreshToken(user);
           return res.status(200).json({
             message: "Login successful",

@@ -2,7 +2,7 @@ const ProductController = require("../controllers/ProductController");
 const express = require("express");
 const router = express.Router();
 const upload = require("../cloudinary/multer");
-
+const middlewaresUser = require("../middlewares/AuthenticationUser");
 router.post("/createProduct", ProductController.createProduct);
 router.post(
   "/uploadImage",
@@ -10,7 +10,11 @@ router.post(
   ProductController.uploadImages
 );
 router.post("/getDataFilter", ProductController.getDataFilter);
-router.post("/updateProduct", ProductController.updateProduct);
+router.post(
+  "/updateProduct",
+  middlewaresUser.authorizationUser,
+  ProductController.updateProduct
+);
 router.get("/getBrand", ProductController.getBrand);
 router.get("/getStores", ProductController.getStores);
 router.post("/getProduct", ProductController.getProduct);

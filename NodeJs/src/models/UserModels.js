@@ -46,9 +46,10 @@ const UserModels = {
     phone,
     sex,
     verified,
+    admin,
   }) => {
     const result = await database.query(
-      `insert into Customers (id_user,full_name, username, birthday, email, avatar, passwordCode,phone, sex, verified) values (?,?,?,?,?,?,?,?,?,?)`,
+      `insert into Customers (id_user,full_name, username, birthday, email, avatar, passwordCode,phone, sex, verified,admin) values (?,?,?,?,?,?,?,?,?,?,?)`,
       [
         id_user,
         full_name,
@@ -60,6 +61,7 @@ const UserModels = {
         phone,
         sex,
         verified,
+        admin,
       ]
     );
     return result;

@@ -18,6 +18,7 @@ import AddNewUser from "../AdminPages/pages/AddNewUser/AddNewUser";
 import DetalOrder from "@userPages/DetalOrder/DetalOrder";
 import ExampleUser from "../UserPages/components/ExampleUser/ExampleUser";
 import SearchUserPage from "../AdminPages/pages/SearchUserPage/SearchUserPage";
+import AdminLogin from "../AdminPages/components/AdminLogin/AdminLogin";
 export const routes = [
   {
     path: "/admin/",
@@ -42,6 +43,11 @@ export const routes = [
   {
     path: "/admin/users",
     component: Users,
+  },
+  {
+    path: "/admin/login",
+    component: AdminLogin,
+    login: true,
   },
   {
     path: "/admin/user-detal/:id",
