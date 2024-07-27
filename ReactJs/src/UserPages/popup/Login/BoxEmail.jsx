@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { ApiCheckUser, ApiGetSMSOTPCodes } from "@redux/api/ApiUser";
-
+import { GoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "@greatsumini/react-facebook-login";
+import { URL_CALL_API } from "../../../constant";
+import { ApiLoginWithGoogle } from "../../../redux/api/ApiUser";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
 const BoxEmail = (props) => {
   const [isEmail, setIsEmail] = useState(true);
 
@@ -54,11 +59,24 @@ const BoxEmail = (props) => {
             alt=""
             className="w-[58px] h-[58px]"
           />
-          <img
-            src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
-            alt=""
-            className="w-[58px] h-[58px]"
-          />
+         <GoogleLogin
+              width={60}
+              onSuccess={(credentialResponse) => {
+                const data = jwtDecode(credentialResponse.credential);
+                ApiLoginWithGoogle(dispatch, {
+                  user: {
+                    email: data.email,
+                    full_name: data.name,
+                    username: null,
+                    avatar: data.picture,
+                    password: null,
+                  },
+                });
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
         </div>
       </div>
     </div>
