@@ -361,3 +361,26 @@ export const ApiSetAddressDefault = async (
     console.log(error);
   }
 };
+
+export const ApiLoginWithGoogle = async (dispatch, { user }) => {
+  try {
+    const res = await axios.post(
+      `${URL_CALL_API}/api/users/loginWithSocial`,
+      {
+        user: user,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    localStorage.setItem("id_user", res.data.user[0].id_user);
+    localStorage.setItem("full_name", res.data.user[0].full_name);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
+    dispatch(
+      getUserSuccess({ ...res.data.user[0], accessToken: res.data.accessToken })
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
