@@ -62,5 +62,6 @@ router.post(
   UserController.uploadAvatar
 );
 router.post("/AdminSearchUser", UserController.AdminSearchUser);
+router.post("/loginWithSocial", UserController.loginWithSocial);
 
 module.exports = router;
