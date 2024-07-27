@@ -191,6 +191,54 @@ const UserController = {
     }
   },
 
+  loginWithSocial: async (req, res) => {
+    try {
+      const { email, password, full_name, username, avatar } = req.body.user;
+      const isUser = await UserModels.checkUserModels({
+        email: email,
+      });
+      console.log("user : ", isUser);
+      if (isUser.length > 0) {
+        const accessToken = generateAccessToken(isUser);
+        res.cookie("accessToken", accessToken, options);
+        const refreshToken = generateRefreshToken(isUser);
+        return res.status(200).json({
+          message: "Login successful",
+          user: isUser,
+          refreshToken: refreshToken,
+          accessToken: accessToken,
+        });
+      } else {
+        const id = uuidv4();
+        const newUser = await UserModels.registerModels({
+          id_user: id,
+          email,
+          password,
+          full_name,
+          username,
+        });
+        if (newUser) {
+          const isUser = await UserModels.checkUserModels({
+            email: email,
+          });
+          if (isUser) {
+            const accessToken = generateAccessToken(isUser);
+            res.cookie("accessToken", accessToken, options);
+            const refreshToken = generateRefreshToken(isUser);
+            return res.status(200).json({
+              message: "Login successful",
+              user: isUser,
+              refreshToken: refreshToken,
+              accessToken: accessToken,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getUsers: async (req, res) => {
     try {
       const result = await UserModels.getUserModels({
